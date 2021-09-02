@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { getCategory } from "../services/categoryservices";
 import { deleteProduct, getProduct } from "../services/productservces";
 
 const ProductTable = () => {
@@ -8,7 +7,6 @@ const ProductTable = () => {
   const [pageNumber, setPageNumber] = useState(0);
   const [totalpages, setTotalPages] = useState(0);
   const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
 
   const getProductData = async () => {
     try {
@@ -20,18 +18,8 @@ const ProductTable = () => {
     }
   };
 
-  const getCategoryData = async () => {
-    try {
-      const res = await getCategory();
-      setCategories(res.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   useEffect(() => {
     getProductData();
-    getCategoryData();
   }, [pageNumber]);
 
   const deleteProductData = async (id) => {
@@ -76,15 +64,8 @@ const ProductTable = () => {
                 <td>{product._id}</td>
                 <td>{product.name}</td>
                 <td>{product.price} Rs.</td>
-                <td>{product.category}</td>
-
-                {categories.map((category) => {
-                  return (
-                    product.category === category._id && (
-                      <td key={category._id}>{category.name}</td>
-                    )
-                  );
-                })}
+                <td>{product.category._id}</td>
+                <td>{product.category.name}</td>
 
                 <td>
                   <Link

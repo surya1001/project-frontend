@@ -100,7 +100,6 @@ const UpdateProduct = () => {
                 Select Category
               </label>
               <select
-                key={category._id}
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
               >
